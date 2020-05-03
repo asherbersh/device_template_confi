@@ -1,1 +1,4 @@
+group_vars/junos/vault.yml
 roles/template_config/templates/ex*.*
+vrun
+roles/template_config/files/*.*
