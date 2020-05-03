@@ -1,0 +1,49 @@
+---
+# tasks file for template_config
+
+- name: "create template for vsrx access router" 
+  template:
+    dest: "./roles/template_config/files/{{inventory_hostname}}.txt"
+    src: "vsrx_temp.j2"
+  when: hostvars[inventory_hostname].model=="vsrx" and hostvars[inventory_hostname].type=="office access"
+
+- name: "create template for ex2300 access switch" 
+  template:
+    dest: "./roles/template_config/files/{{inventory_hostname}}.txt"
+    src: "ex2300_l2_sw_office_template_ansi.j2"
+  when: hostvars[inventory_hostname].model=="ex2300" and hostvars[inventory_hostname].type=="office access"
+
+- name: "create template for ex3300 access switch" 
+  template:
+    dest: "./roles/template_config/files/{{inventory_hostname}}.txt"
+    src: "ex3300_l2_sw_office_template_ansi.j2"
+  when: hostvars[inventory_hostname].model=="ex3300" and hostvars[inventory_hostname].type=="office access"
+
+- name: "create template for ex3400 access switch" 
+  template:
+    dest: "./roles/template_config/files/{{inventory_hostname}}.txt"
+    src: "ex3400_l2_sw_office_template_ansi.j2"
+  when: hostvars[inventory_hostname].model=="ex3400" and hostvars[inventory_hostname].type=="office access"
+
+- name: "create template for ex3400 backbone switch" 
+  template:
+    dest: "./roles/template_config/files/{{inventory_hostname}}.txt"
+    src: "ex3400_l3_sw_office_template_ansi.j2"
+  when: hostvars[inventory_hostname].model=="ex3400" and hostvars[inventory_hostname].type=="office backbone"
+
+- name: "create template for ex4600 backbone switch" 
+  template:
+    dest: "./roles/template_config/files/{{inventory_hostname}}.txt"
+    src: "ex4600_l3_sw_office_template_ansi.j2"
+  when: hostvars[inventory_hostname].model=="ex4600"
+
+- name: "create template for ex3400 data center access switch" 
+  template:
+    dest: "./roles/template_config/files/{{inventory_hostname}}.txt"
+    src: "ex3400_l2_sw_datacenter_template_ansi.j2"
+  when: hostvars[inventory_hostname].model=="ex3400" and hostvars[inventory_hostname].type=="data center access"
+
+- name: "implement template config into junos device"
+  junos_config:
+    src: "./roles/template_config/files/{{inventory_hostname}}.txt"
+    src_format: set
