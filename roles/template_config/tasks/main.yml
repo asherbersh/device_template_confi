@@ -45,5 +45,6 @@
 
 - name: "implement template config into junos device"
   junos_config:
+    update: override
     src: "./roles/template_config/files/{{inventory_hostname}}.txt"
     src_format: set
